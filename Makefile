@@ -1,4 +1,4 @@
-.PHONY: data train predictions
+.PHONY: data train predictions train_predictions
 
 #################################################################################
 # GLOBALS                                                                       #
@@ -21,7 +21,7 @@ train:
 
 ## Make test predictions
 predictions:
-	$(PYTHON_INTERPRETER) predict.py 2cf26146-2391-4029-8e9e-2e9aa8b21008_30 raw_data/test
+	$(PYTHON_INTERPRETER) predict.py final_model raw_data/test
 
 ## Make train predictions
 train_predictions:

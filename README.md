@@ -6,11 +6,12 @@ This is a pretrained EfficientNet v2 large model fine-tuned solely on the `train
 Usage Overview
 --------------
 1. [Install](#install-requirements) the requirements.
-2. [Unzip data](#unzip-data) to the appropriate directory.
-3. [Preprocess](#preprocessing) the data.
-3. [Train](#training) the model.
-4. [Make predictions](#predictions) on test data.
-5. [Assess](#assess-performance) model performance.
+2. [Download](#download-model) the model.
+3. [Unzip data](#unzip-data) to the appropriate directory.
+4. [Preprocess](#preprocessing) the data.
+5. [Train](#training) the model.
+6. [Make predictions](#predictions) on test data.
+7. [Assess](#assess-performance) model performance.
 
 
 Install Requirements
@@ -28,6 +29,11 @@ pip install Pillow scikit-learn tqdm tensorboard
 pip install dlib face_recognition
 pip install opencv-python pyyaml seaborn optuna plotly
 ```
+
+Download Model
+--------------
+
+The model is too large to be committed to a Github repo, so please download it from [here](https://drive.google.com/file/d/1m49mTiUD0CV4TF31EsExCMAdHi-XxYRh/view?usp=sharing) and put it into `/models`.
 
 Unzip Data
 ----------
