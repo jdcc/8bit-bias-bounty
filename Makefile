@@ -21,7 +21,7 @@ train:
 
 ## Make test predictions
 predictions:
-	$(PYTHON_INTERPRETER) predict.py c21790dc-536e-44b9-8071-63586284bd6d raw_data/test
+	$(PYTHON_INTERPRETER) predict.py 2cf26146-2391-4029-8e9e-2e9aa8b21008_30 raw_data/test
 
 ## Make train predictions
 train_predictions:

@@ -4,6 +4,7 @@ from pathlib import Path
 
 from joblib import dump
 import numpy as np
+import pandas as pd
 
 from data_set import BiasBountyDataset
 from train import TransferLearning
@@ -42,6 +43,7 @@ def probs_to_text_labels(probs, dataset):
     labels = dataset.label_encoder.inverse_transform(
         np.concatenate((skin_tone_preds, age_preds, gender_preds), axis=1)
     ).tolist()
+    # The classes separate a ton, so this is fine and doesn't really require tuning.
     object_prob_threshold = 0.5
     n_objects = (probs["object"] > object_prob_threshold).sum()
     print(f"Predicted {n_objects} objects")
@@ -71,6 +73,12 @@ if __name__ == "__main__":
     dump(predictions, pred_path)
     print(f"Saved predictions to {pred_path}")
     labels = probs_to_text_labels(predictions, dataset)
+    output = pd.DataFrame(
+        labels[0],
+        index=dataset.labels_df["name"],
+        columns=["skin_tone", "age", "gender"],
+    )
+    output.to_csv(Path(PRED_DIR) / f"{args.model_id}{args.suffix}_labels.csv")
     pred_path = Path(PRED_DIR) / f"{args.model_id}{args.suffix}_labels.pkl"
     dump(labels, pred_path)
     print(f"Saved labels to {pred_path}")

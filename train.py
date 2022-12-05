@@ -18,7 +18,8 @@ from tqdm.auto import tqdm
 from data_set import BiasBountyDataset, DEFAULT_TRANSFORM
 
 N_OUTPUTS = 17
-MODEL_DIR = "/home/justin/projects/bias_bounty/models"
+PROJECT_DIR = "/home/justin/projects/bias_bounty"
+MODEL_DIR = f"{PROJECT_DIR}/models"
 PARAMS = {
     "seed": 0,
     "batch_size": 32,
@@ -117,8 +118,12 @@ class TransferLearning:
             algorithm=state["algorithm"],
             optimizer=state["optimizer"],
         )
-        instance.model.load_state_dict(state["best_state"]["model"])
-        instance.optimizer.load_state_dict(state["best_state"]["optimizer"])
+        if state["best_state"] is None:
+            instance.model.load_state_dict(state["current_state"]["model"])
+            instance.optimizer.load_state_dict(state["current_state"]["optimizer"])
+        else:
+            instance.model.load_state_dict(state["best_state"]["model"])
+            instance.optimizer.load_state_dict(state["best_state"]["optimizer"])
         return instance
 
     def log_to_tensorboard(self, phase, epoch, epoch_loss):
@@ -383,7 +388,7 @@ if __name__ == "__main__":
 
     study = optuna.create_study(
         study_name="bias_bounty_study",
-        storage="sqlite:////home/justin/projects/bias_bounty/studies_7.db",
+        storage=f"sqlite:///{PROJECT_DIR}/studies_7.db",
         direction="minimize",
         load_if_exists=True,
         pruner=optuna.pruners.MedianPruner(n_warmup_steps=75),
